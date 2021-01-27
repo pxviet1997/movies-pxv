@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, Button } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Button, TouchableOpacity } from 'react-native';
 // import { Button } from 'react-native-element'
 
 import Movie from '../components/Movie';
 import useResults from '../hooks/useResults';
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
   const [fetchApi, results, errorMessage] = useResults();
 
   // console.log(results);
@@ -16,8 +16,16 @@ const MainScreen = () => {
         data={results.results}
         keyExtractor={(result) => result.id.toString()}
         renderItem={({ item }) => {
+          console.log(item)
           return (
-            <Movie movie={item} />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Detail', { movie: item })
+              }
+            >
+              <Movie movie={item} />
+            </TouchableOpacity>
+
           );
         }}
       />
